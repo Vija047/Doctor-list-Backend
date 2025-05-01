@@ -32,7 +32,7 @@ app.use('/api/doctors', doctorRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.use(cors({
-  origin: "http://localhost:8080", // frontend Vite default
+  origin: "https://doctor-list-frontend.vercel.app/", // frontend Vite default
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }))
