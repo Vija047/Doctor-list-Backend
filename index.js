@@ -20,24 +20,22 @@ const connectDB = async () => {
   }
 };
 
-
-const doctorRoutes = require('./routes/doctorRoutes');
-
-
-app.use(cors());
-app.use(express.json());
-
-// Route handling
-app.use('/api/doctors', doctorRoutes);
-
-const PORT = process.env.PORT || 5000;
+// Middleware
 app.use(cors({
-  origin: "https://doctor-list-frontend-9xet.vercel.app/", // frontend Vite default
+  origin: "https://doctor-list-frontend-64mg.vercel.app", 
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
-}))
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+}));
+app.use(express.json());
 
-connectDB();
+// Routes
+const doctorRoutes = require('./routes/doctorRoutes');
+app.use('/api/doctors', doctorRoutes);
+
+// Start server *after* DB connects
+const PORT = process.env.PORT || 5000;
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
